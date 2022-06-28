@@ -1,4 +1,4 @@
-package project.GameUtils;
+package project.Game.GameUtils;
 
 
 /**
