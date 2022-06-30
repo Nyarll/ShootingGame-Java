@@ -2,7 +2,9 @@ package project.Game.GameUtils;
 
 
 /**
- * 2D Vector class
+ * 2D Vector class<br>
+ * implements Cloneable<br>
+ * 
  * @author unlucky0314
  *
  * @version 1.0.0
@@ -17,9 +19,14 @@ public class Vector2 implements Cloneable
 	private float y = 0;
 	
 	// <constant>
+	
+	/** upward vector : 上方向ベクトル */
 	public static final Vector2 up = new Vector2(0, -1);
+	/** down vector : 下方向ベクトル */
 	public static final Vector2 down = new Vector2(0, 1);
+	/** left vector : 左方向ベクトル */
 	public static final Vector2 left = new Vector2(-1, 0);
+	/** right vector : 右方向ベクトル */
 	public static final Vector2 right = new Vector2(1, 0);
 	
 	
@@ -104,7 +111,7 @@ public class Vector2 implements Cloneable
 	
 	/**
 	 * 
-	 * @return vector length
+	 * @return this vector length
 	 */
 	public float length()
 	{
@@ -114,7 +121,7 @@ public class Vector2 implements Cloneable
 	/**
 	 * 
 	 * @param vec
-	 * @return
+	 * @return dot(float)
 	 */
 	public float dot(Vector2 vec)
 	{
@@ -124,7 +131,7 @@ public class Vector2 implements Cloneable
 	/**
 	 * 
 	 * @param vec
-	 * @return
+	 * @return cross(float)
 	 */
 	public float cross(Vector2 vec)
 	{
@@ -132,9 +139,10 @@ public class Vector2 implements Cloneable
 	}
 	
 	/**
+	 * Returns a vector rotated by "rad" radians.<br>
 	 * 
 	 * @param rad
-	 * @return
+	 * @return rotate this vector
 	 */
 	public Vector2 rotate(float rad)
 	{
@@ -245,6 +253,8 @@ public class Vector2 implements Cloneable
 		try
 		{
 			result = (Vector2)super.clone();
+			result.x = this.x;
+			result.y = this.y;
 		}
 		catch (Exception e)
 		{

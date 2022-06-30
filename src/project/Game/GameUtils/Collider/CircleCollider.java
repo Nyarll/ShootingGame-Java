@@ -55,4 +55,32 @@ public class CircleCollider implements ICollider
 	{
 		return this.radius;
 	}
+	
+	@Override
+	public String toString()
+	{
+		String result = "center:(" + this.center + "), radius:" + radius +
+				", isHit:" + isHit;
+		
+		return result;
+	}
+	
+	@Override
+	public ICollider clone()
+	{
+		CircleCollider result = null;
+		
+		try
+		{
+			result = (CircleCollider)super.clone();
+			result.center = this.center.clone();
+			result.radius = this.radius;
+			result.isHit = false;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

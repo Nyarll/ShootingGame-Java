@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
+ * GameWindow class : main window<br>
+ * extends JFrame<br>
+ * implements Runnable<br>
  * 
  * @author unlucky0314
  *
