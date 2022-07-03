@@ -46,14 +46,13 @@ public abstract class GameObject extends Component implements IGameObject
 	@Override
 	public boolean equals(Object obj)
 	{
-		if(obj == null)	return true;
+		if(obj == null)	return false;
 		if(obj == this)	return true;
 		if(!(obj instanceof GameObject)) return false;
 		GameObject b = (GameObject)obj;
 		if(!this.position.equals(b.position)) return false;
 		if(!this.tag.equals(b.tag)) return false;
 		if(!this.collider.equals(b.collider)) return false;
-		if(this.isAlive != b.isAlive) return false;
 		
 		return true;
 	}
