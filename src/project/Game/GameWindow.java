@@ -6,7 +6,9 @@ import java.awt.event.KeyEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import project.Game.GameUtils.ComponentFinder.SingletonComponentFinder;
 import project.Game.GameUtils.InputManager.InputManager;
+import project.Game.Scene.IScene;
 
 /**
  * GameWindow class : main window<br>
@@ -38,6 +40,8 @@ public class GameWindow extends JFrame implements Runnable
 		
 		InputManager.Initialize();
 		this.addKeyListener(InputManager.getInstance().getKeyboard());
+		
+		SingletonComponentFinder.Initialize(this);
 	}
 	
 	/**
@@ -49,7 +53,7 @@ public class GameWindow extends JFrame implements Runnable
 		this.getContentPane().removeAll();
 		Insets inset = getInsets();
 		panel.setBounds(-inset.left, -inset.top, this.getWidth(), this.getHeight());
-		panel.setName("NowActiveScene");
+		panel.setName("ActiveScene");
 		super.add(panel);
 		this.validate();
 		this.repaint();
@@ -64,8 +68,15 @@ public class GameWindow extends JFrame implements Runnable
 			{
 				if(InputManager.getInstance().IsKeyPressed(KeyEvent.VK_ESCAPE))
 				{
+					System.out.println("[ESCAPE] Game Exit.");
 					break;
 				}
+				
+				var instance = SingletonComponentFinder.getInstance();
+				IScene activeScene = (IScene)instance.findComponent("ActiveScene", true);
+				
+				activeScene.Update();
+				
 				this.repaint();
 			}
 			catch(Exception e)

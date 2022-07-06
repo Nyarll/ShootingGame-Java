@@ -26,6 +26,6 @@ public abstract class Scene extends JPanel implements IScene
 	@Override
 	public void Update()
 	{
-		
+		//System.out.println("update");
 	}
 }

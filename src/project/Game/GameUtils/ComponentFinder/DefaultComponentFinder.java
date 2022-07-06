@@ -118,7 +118,7 @@ public class DefaultComponentFinder implements IComponentFinder
 				component_count++;
 				if(result.length <= component_count)
 				{
-					result = remakeComponents(result);
+					result = remakeComponents(result, result.length + TEMP_COMPONENTS_SIZE);
 				}
 			}
 			if((components[i] instanceof Container) && recurse)
@@ -132,19 +132,24 @@ public class DefaultComponentFinder implements IComponentFinder
 						component_count++;
 						if(result.length <= component_count)
 						{
-							result = remakeComponents(result);
+							result = remakeComponents(result, result.length + TEMP_COMPONENTS_SIZE);
 						}
 					}
 				}
 			}
 		}
 		
+		if(result != null)
+		{
+			result = remakeComponents(result, component_count);
+		}
+		
 		return result;
 	}
 	
-	private Component[] remakeComponents(Component[] original)
+	private Component[] remakeComponents(Component[] original, int remake_size)
 	{
-		Component[] remake = new Component[original.length + TEMP_COMPONENTS_SIZE];
+		Component[] remake = new Component[remake_size];
 		for(int i = 0;i < original.length; i++)
 		{
 			remake[i] = original[i];
