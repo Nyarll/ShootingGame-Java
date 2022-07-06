@@ -1,3 +1,9 @@
 {
-	"version" : "version 0.0.2 - develop"
+	"GameWindowConfig":
+	{
+		"title" : "Game",
+		"version" : "version 0.0.3 - develop",
+		"width" : 640,
+		"height" : 640
+	}
 }

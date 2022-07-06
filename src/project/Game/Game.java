@@ -1,5 +1,12 @@
 package project.Game;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import project.Game.Scene.SampleScene;
 
 /**
@@ -9,18 +16,48 @@ import project.Game.Scene.SampleScene;
  */
 public class Game
 {
-	static final String version = "version 0.0.2 - develop";
+	private String title;
+	private String version = "";
 	
-	static final int width = 640;
-	static final int height = 640;
+	private int width = 0;
+	private int height = 0;
+	
+	JsonNode config = null;
 	
 	public Game()
 	{
-		var game_window = new GameWindow("GameWindow " + version, width, height);
+		importConfig("./config/config.json");
+		var game_window = new GameWindow(title + " " + version, width, height);
 		
 		game_window.change(new SampleScene(width, height));
 		game_window.setVisible(true);
 		
 		game_window.run();
+	}
+	
+	private void importConfig(String config_path)
+	{
+		Path path = Paths.get(config_path);
+		
+		ObjectMapper obj_mapper = new ObjectMapper();
+		
+		try
+		{
+			config = obj_mapper.readTree(path.toFile());
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+		}
+		settingConfig();
+	}
+	
+	private void settingConfig()
+	{
+		JsonNode windowConfig = config.get("GameWindowConfig");
+		this.title = windowConfig.get("title").asText();
+		this.version = windowConfig.get("version").asText();
+		this.width = windowConfig.get("width").asInt();
+		this.height = windowConfig.get("height").asInt();
 	}
 }
