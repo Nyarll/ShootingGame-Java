@@ -1,9 +1,12 @@
 package project.Game;
 
 import java.awt.Insets;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import project.Game.GameUtils.InputManager.InputManager;
 
 /**
  * GameWindow class : main window<br>
@@ -29,8 +32,12 @@ public class GameWindow extends JFrame implements Runnable
 		this.setSize(width, height);
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
+	
 		
 		this.setName("GameWindow");
+		
+		InputManager.Initialize();
+		this.addKeyListener(InputManager.getInstance().getKeyboard());
 	}
 	
 	/**
@@ -51,6 +58,20 @@ public class GameWindow extends JFrame implements Runnable
 	@Override
 	public void run()
 	{
-		
+		while(true)
+		{
+			try
+			{
+				if(InputManager.getInstance().IsKeyPressed(KeyEvent.VK_ESCAPE))
+				{
+					break;
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		System.exit(0);
 	}
 }

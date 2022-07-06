@@ -1,5 +1,7 @@
 package project.Game;
 
+import project.Game.Scene.SampleScene;
+
 /**
  * 
  * @author unlucky0314
@@ -16,6 +18,7 @@ public class Game
 	{
 		var game_window = new GameWindow("GameWindow " + version, width, height);
 		
+		game_window.change(new SampleScene(width, height));
 		game_window.setVisible(true);
 		
 		game_window.run();

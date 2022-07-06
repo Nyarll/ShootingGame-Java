@@ -1,17 +1,23 @@
 package project.Game.GameObjects;
 
 import java.awt.Component;
+import java.awt.Graphics;
 
 import project.Game.GameUtils.Vector2;
 import project.Game.GameUtils.Collider.ICollider;
 
+/**
+ * 
+ * @author unlucky0314
+ *
+ */
 public abstract class GameObject extends Component implements IGameObject
 {
 	// <Field>
-	protected Vector2 position = null;		// オブジェクト座標
-	protected String tag = null;			// タグ
-	protected boolean isAlive = true;		// 生存フラグ
-	protected ICollider collider = null;	// コライダー
+	protected Vector2 m_position = null;		// オブジェクト座標
+	protected String m_tag = null;			// タグ
+	protected boolean m_isAlive = true;		// 生存フラグ
+	protected ICollider m_collider = null;	// コライダー
 	
 	// <Method>
 	
@@ -36,10 +42,16 @@ public abstract class GameObject extends Component implements IGameObject
 	
 	protected void init(Vector2 vec)
 	{
-		position = vec.clone();
+		m_position = vec.clone();
 		this.setName("GameObject");
-		tag = "GameObject";
+		m_tag = "GameObject";
 	}
+	
+	@Override
+	public abstract void Update();
+	
+	@Override
+	public abstract void Render(Graphics g);
 	
 	// <Override>
 	
@@ -50,9 +62,9 @@ public abstract class GameObject extends Component implements IGameObject
 		if(obj == this)	return true;
 		if(!(obj instanceof GameObject)) return false;
 		GameObject b = (GameObject)obj;
-		if(!this.position.equals(b.position)) return false;
-		if(!this.tag.equals(b.tag)) return false;
-		if(!this.collider.equals(b.collider)) return false;
+		if(!this.m_position.equals(b.m_position)) return false;
+		if(!this.m_tag.equals(b.m_tag)) return false;
+		if(!this.m_collider.equals(b.m_collider)) return false;
 		
 		return true;
 	}
@@ -61,10 +73,10 @@ public abstract class GameObject extends Component implements IGameObject
 	public String toString()
 	{
 		String result = "Name:" + this.getName() +
-				", position:(" + this.position +
-				"), tag:" + this.tag +
-				", isAlive:" + this.isAlive +
-				", collider:{" + collider + "}";
+				", position:(" + this.m_position +
+				"), tag:" + this.m_tag +
+				", isAlive:" + this.m_isAlive +
+				", collider:{" + m_collider + "}";
 		
 		return result;
 	}
@@ -76,9 +88,9 @@ public abstract class GameObject extends Component implements IGameObject
 		try
 		{
 			result = (GameObject)super.clone();
-			result.position = this.position.clone();
-			result.tag = this.tag;
-			result.collider = this.collider.clone();
+			result.m_position = this.m_position.clone();
+			result.m_tag = this.m_tag;
+			result.m_collider = this.m_collider.clone();
 		}
 		catch (Exception e)
 		{
