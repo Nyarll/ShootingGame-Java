@@ -66,6 +66,7 @@ public class GameWindow extends JFrame implements Runnable
 				{
 					break;
 				}
+				this.repaint();
 			}
 			catch(Exception e)
 			{

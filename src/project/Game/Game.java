@@ -9,7 +9,7 @@ import project.Game.Scene.SampleScene;
  */
 public class Game
 {
-	static final String version = "version 0.0.1 - develop";
+	static final String version = "version 0.0.2 - develop";
 	
 	static final int width = 640;
 	static final int height = 640;
