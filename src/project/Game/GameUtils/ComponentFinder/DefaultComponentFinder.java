@@ -96,7 +96,8 @@ public class DefaultComponentFinder implements IComponentFinder
 	
 	protected Component[] findComponents(Container current, String name, boolean recurse)
 	{
-		Component[] result = null;
+		Component[] result = new Component[TEMP_COMPONENTS_SIZE];
+		boolean isExist = false;
 		
 		var components = current.getComponents();
 		int component_count = 0;
@@ -107,15 +108,11 @@ public class DefaultComponentFinder implements IComponentFinder
 			{
 				continue;
 			}
-			
 			if(components[i].getName().equals(name))
 			{
-				if(result == null)
-				{
-					result = new Component[TEMP_COMPONENTS_SIZE];
-				}
 				result[component_count] = components[i];
 				component_count++;
+				isExist = true;
 				if(result.length <= component_count)
 				{
 					result = remakeComponents(result, result.length + TEMP_COMPONENTS_SIZE);
@@ -126,12 +123,14 @@ public class DefaultComponentFinder implements IComponentFinder
 				Component[] work = findComponents((Container)components[i], name, recurse);
 				if(work != null)
 				{
+					isExist = true;
 					for(var value : work)
 					{
 						result[component_count] = value;
 						component_count++;
 						if(result.length <= component_count)
 						{
+							System.out.println(result.length + ", " + component_count);
 							result = remakeComponents(result, result.length + TEMP_COMPONENTS_SIZE);
 						}
 					}
@@ -139,7 +138,11 @@ public class DefaultComponentFinder implements IComponentFinder
 			}
 		}
 		
-		if(result != null)
+		if(!isExist)
+		{
+			result = null;
+		}
+		else
 		{
 			result = remakeComponents(result, component_count);
 		}
@@ -150,9 +153,20 @@ public class DefaultComponentFinder implements IComponentFinder
 	private Component[] remakeComponents(Component[] original, int remake_size)
 	{
 		Component[] remake = new Component[remake_size];
-		for(int i = 0;i < original.length; i++)
+
+		if(original.length < remake_size)
 		{
-			remake[i] = original[i];
+			for(int i = 0;i < original.length; i++)
+			{
+				remake[i] = original[i];
+			}
+		}
+		else
+		{
+			for(int i = 0;i < remake_size; i++)
+			{
+				remake[i] = original[i];
+			}
 		}
 		return remake;
 	}

@@ -1,6 +1,11 @@
 package project.Game.Scene;
 
+import java.awt.Component;
+
 import javax.swing.JPanel;
+
+import project.Game.GameObjects.GameObject;
+import project.Game.GameUtils.ComponentFinder.SingletonComponentFinder;
 
 public abstract class Scene extends JPanel implements IScene
 {
@@ -26,6 +31,32 @@ public abstract class Scene extends JPanel implements IScene
 	@Override
 	public void Update()
 	{
-		//System.out.println("update");
+		var instance = SingletonComponentFinder.getInstance();
+		GameObject player = null;
+		var game_objects = instance.findComponents("GameObject", true);
+		
+		if(game_objects != null)
+		{
+			for(Component obj : game_objects)
+			{
+				if(obj instanceof GameObject)
+				{
+					((GameObject) obj).Update();
+
+					if(((GameObject) obj).getTag() == "Player")
+					{
+						player = ((GameObject) obj);
+					}
+				}
+			}
+			
+			for(Component obj : game_objects)
+			{
+				if(!((GameObject) obj).isAlive())
+				{
+					obj = null;
+				}
+			}
+		}
 	}
 }

@@ -66,6 +66,7 @@ public class GameWindow extends JFrame implements Runnable
 		{
 			try
 			{
+				Thread.sleep(5);
 				if(InputManager.getInstance().IsKeyPressed(KeyEvent.VK_ESCAPE))
 				{
 					System.out.println("[ESCAPE] Game Exit.");

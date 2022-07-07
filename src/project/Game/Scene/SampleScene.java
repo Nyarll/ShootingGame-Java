@@ -1,13 +1,20 @@
 package project.Game.Scene;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
+
+import project.Game.GameObjects.GameObject;
+import project.Game.GameObjects.Player;
+import project.Game.GameUtils.ComponentFinder.SingletonComponentFinder;
 
 public class SampleScene extends Scene
 {
 	public SampleScene(int width, int height)
 	{
 		super(width, height);
+		
+		this.add(new Player(width / 2, height / 2));
 	}
 	
 	@Override
@@ -24,11 +31,14 @@ public class SampleScene extends Scene
 		// frame_rate.process();
 		// g.drawString((frame_rate.getFrameRate() / 3.f) + "fps", 0, 10);
 		
-		for(int y = 0; y < 61; y++)
+		var instance = SingletonComponentFinder.getInstance();
+		var objects = instance.findComponents("GameObject", true);
+		
+		if(objects != null)
 		{
-			for(int x = 0; x < 26; x++)
+			for(Component obj : objects)
 			{
-				g.drawString("Test", "Test".length() * 6 * x,  10 * y);
+				((GameObject) obj).Render(g);
 			}
 		}
 	}

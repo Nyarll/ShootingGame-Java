@@ -53,6 +53,16 @@ public abstract class GameObject extends Component implements IGameObject
 	@Override
 	public abstract void Render(Graphics g);
 	
+	public String getTag()
+	{
+		return m_tag;
+	}
+	
+	public boolean isAlive()
+	{
+		return m_isAlive;
+	}
+	
 	// <Override>
 	
 	@Override
